@@ -27,36 +27,24 @@ import com.lmptech.intune.ui.components.ChatListItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer() {
-    Column (
+    LazyColumn (
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth(fraction = 0.73f)
             .padding(horizontal = 12.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        SearchBar(query = "",
-            onQueryChange = {}, onSearch = {},
-            active = false, onActiveChange = {},
-            content = {}, trailingIcon = { IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Default.Person, contentDescription = "")
-            }})
-        
-
-        LazyColumn(modifier = Modifier.weight(0.8f)
-            .padding(vertical = 4.dp)
-            .clip(RoundedCornerShape(12.dp))) {
-            items(count = 30) {
-                ChatListItem()
-            }
+        item {
+            SearchBar(query = "",
+                onQueryChange = {}, onSearch = {},
+                active = false, onActiveChange = {},
+                content = {}, trailingIcon = { IconButton(onClick = { /*TODO*/ }) {
+                    Icon(imageVector = Icons.Default.Person, contentDescription = "")
+                }})
         }
 
-        Card(
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            onClick = { /*TODO*/ }) {
-            ListItem(
-                headlineContent = { Text(text = "User name") },
-                leadingContent = { Text(text = "A") },
-                supportingContent = { Text(text = "last active") })
+        items(count = 30) {
+            ChatListItem()
         }
 
     }

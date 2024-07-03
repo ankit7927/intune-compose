@@ -31,13 +31,10 @@ fun MainView() {
 
 
     val configuration = LocalConfiguration.current
-    val density = LocalDensity.current.density
 
-    val screenWidth = remember {
-        derivedStateOf { (configuration.screenWidthDp * density).roundToInt() }
+    val offsetValue by remember {
+        derivedStateOf { ((configuration.screenWidthDp / 4) * 3).dp}
     }
-
-    val offsetValue by remember { derivedStateOf { (screenWidth.value / 4).dp } }
 
     val animatedOffset by animateDpAsState(
         targetValue = if (drawerState.isOpened()) offsetValue else 0.dp,
@@ -57,14 +54,14 @@ fun MainView() {
 
     Box(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.surface)
             .statusBarsPadding()
             .navigationBarsPadding()
             .fillMaxSize()
     ) {
         Drawer()
         HomeScreen(modifier = Modifier
-            .offset(x = animatedOffset)
-            .shadow(animatedShadow, shape = RoundedCornerShape(12.dp)),
+            .offset(x = animatedOffset),
             drawerState = drawerState,
             onNavigationMenuClick = { drawerState = it })
     }
