@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lmptech.intune.data.model.LoginRequest
 import com.lmptech.intune.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -68,21 +69,22 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
         viewModelScope.launch {
             uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true))
             try {
-                uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, loggedIn = true))
+                val response = authRepository.login(LoginRequest(uiState.value.email, uiState.value.password))
+                if (response.isSuccessful) {
+                    // save token hr
 
-//                val response = authRepository.login(uiState.value.email, uiState.value.password)
-//                if (response.isSuccessful) {
-//                    // save token hr
-//                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, loggedIn = true))
-//                } else {
-//                    uiStateFlow.emit(
-//                        uiStateFlow.value.copy(
-//                            isLoading = false,
-//                            error = response.message()
-//                        )
-//                    )
-//                }
+                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, loggedIn = true))
+                } else {
+                    println(response.toString())
+                    uiStateFlow.emit(
+                        uiStateFlow.value.copy(
+                            isLoading = false,
+                            error = response.message()
+                        )
+                    )
+                }
             } catch (e: Exception) {
+                println(e.toString())
                 uiStateFlow.emit(
                     uiStateFlow.value.copy(
                         isLoading = false,

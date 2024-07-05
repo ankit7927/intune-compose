@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -67,6 +69,9 @@ fun AuthScreen(
         Text(text = if (uiState.loginScreen) "Welcome Back" else "Hello there!", style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Medium))
         Text(text = if (uiState.loginScreen) "we are excited to see you again" else "thanks for choosing us.")
 
+        AnimatedVisibility(visible = uiState.error != "")  {
+            Text(text = uiState.error, color = Color.Red)
+        }
 
         AnimatedVisibility(visible = !uiState.loginScreen) {
             Column {
@@ -96,11 +101,16 @@ fun AuthScreen(
 
 
         Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { authViewModel.onContinueClick() }) {
-            Text(text = "Continue")
+        if (uiState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.size(24.dp))
+        } else {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { authViewModel.onContinueClick() }) {
+                Text(text = "Continue")
+            }
         }
+
 
 
         Spacer(modifier = Modifier.height(8.dp))
