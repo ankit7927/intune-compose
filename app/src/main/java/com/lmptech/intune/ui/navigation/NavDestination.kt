@@ -1,5 +1,6 @@
 package com.lmptech.intune.ui.navigation
 
+import com.lmptech.intune.ui.home.MainScreenDestination
 import com.lmptech.intune.ui.landing.LandingDestination
 
 interface NavDestination {
@@ -9,6 +10,6 @@ interface NavDestination {
 object AuthChecker {
     fun calculateStartDestination() :String {
         // here calculate user authenticated or not and return route
-        return LandingDestination.route
+        return MainScreenDestination.route
     }
 }
