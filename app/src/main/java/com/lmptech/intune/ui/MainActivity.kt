@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.lmptech.intune.ui.home.MainView
+import com.lmptech.intune.ui.navigation.RootNavigationGraph
 import com.lmptech.intune.ui.theme.IntuneTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             IntuneTheme {
-                MainView()
+                RootNavigationGraph()
             }
         }
     }

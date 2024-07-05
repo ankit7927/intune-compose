@@ -1,5 +1,5 @@
 package com.lmptech.intune.data.model
 
-data class LoginResponse(
+data class LoginResponseModel(
     val token:String,
 )

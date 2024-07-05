@@ -23,7 +23,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.lmptech.intune.domain.models.DrawerState
 import com.lmptech.intune.domain.models.isOpened
+import com.lmptech.intune.ui.navigation.NavDestination
 import kotlin.math.roundToInt
+
+object MainScreenDestination : NavDestination {
+    override val route: String
+        get() = "main_screen"
+
+}
 
 @Composable
 fun MainView() {
