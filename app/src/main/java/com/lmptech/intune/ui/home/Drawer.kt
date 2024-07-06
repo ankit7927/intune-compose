@@ -1,5 +1,6 @@
 package com.lmptech.intune.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,7 +39,8 @@ import com.lmptech.intune.ui.components.ChatListItem
 fun Drawer(
     modifier: Modifier = Modifier,
     drawerViewModel: DrawerViewModel = viewModel(factory = AppViewModelProvider.factory),
-    onChatClick:(String) -> Unit = {}
+    onChatClick:(String) -> Unit = {},
+    onProfileClick:() ->Unit = {}
 ) {
     val drawerState by drawerViewModel.drawerUiState.collectAsState()
 
@@ -51,14 +54,23 @@ fun Drawer(
         } else if (drawerState.error != "") {
             Text(text = drawerState.error)
         } else {
-            DrawerBody(chats = drawerState.chats, onChatClick = onChatClick)
+            DrawerBody(
+                chats = drawerState.chats,
+                onChatClick = onChatClick,
+                onProfileClick = onProfileClick
+            )
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DrawerBody(modifier: Modifier = Modifier, chats: List<ChatResponseModel>, onChatClick: (String) -> Unit = {}) {
+fun DrawerBody(
+    modifier: Modifier = Modifier,
+    chats: List<ChatResponseModel>,
+    onChatClick: (String) -> Unit = {},
+    onProfileClick:() ->Unit = {}
+) {
 
     Column(modifier = modifier
         .statusBarsPadding()
@@ -74,14 +86,11 @@ fun DrawerBody(modifier: Modifier = Modifier, chats: List<ChatResponseModel>, on
         }
 
         ListItem(
+            modifier = Modifier.clickable { onProfileClick.invoke() },
             headlineContent = { Text(text = "User Name") },
             supportingContent = { Text(text = "status") },
             trailingContent = {
-                IconButton(
-                    onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Menu, contentDescription = "")
-
-                }
+                Icon(imageVector = Icons.Default.MoreVert, contentDescription = "")
             })
     }
 }

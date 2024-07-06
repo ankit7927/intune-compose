@@ -23,7 +23,9 @@ object MainScreenDestination : NavDestination {
 }
 
 @Composable
-fun MainView() {
+fun MainView(
+    onProfileClick:() ->Unit = {}
+) {
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -60,7 +62,12 @@ fun MainView() {
         modifier = Modifier.imePadding(),
         drawerState = dState,
         gesturesEnabled = true,
-        drawerContent = { Drawer(onChatClick = { onChatClick(it) }) }) {
+        drawerContent = {
+            Drawer(
+                onChatClick = { onChatClick(it) },
+                onProfileClick = onProfileClick
+            )
+        }) {
         HomeScreen(activeChatId = activeChatId)
     }
 }

@@ -14,6 +14,7 @@ import com.lmptech.intune.ui.landing.AuthDestination
 import com.lmptech.intune.ui.landing.AuthScreen
 import com.lmptech.intune.ui.landing.LandingDestination
 import com.lmptech.intune.ui.landing.LandingScreen
+import com.lmptech.intune.ui.usermenu.UserMenuDestination
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -40,9 +41,14 @@ fun RootNavigationGraph(
         }
 
         composable(route = MainScreenDestination.route) {
-            MainView()
+            MainView(onProfileClick = {
+                navController.navigate(UserMenuDestination.route)
+            })
         }
 
+        composable(route = UserMenuDestination.route){
+            UserNavigationGraph(navController = navController)
+        }
 
     }
 

@@ -17,6 +17,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.lmptech.intune.ui.navigation.NavDestination
+
+object UserMenuDestination: NavDestination {
+    override val route: String
+        get() = "user_menu_screen"
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
