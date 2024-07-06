@@ -6,12 +6,17 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.lmptech.intune.IntuneApplication
+import com.lmptech.intune.ui.home.DrawerViewModel
 import com.lmptech.intune.ui.landing.AuthViewModel
 
 object AppViewModelProvider {
     val factory: ViewModelProvider.Factory = viewModelFactory {
         initializer {
             AuthViewModel(application().appContainer.authRepository)
+        }
+
+        initializer {
+            DrawerViewModel(application().appContainer.chatRepository)
         }
     }
 }

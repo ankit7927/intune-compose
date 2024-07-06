@@ -12,7 +12,7 @@ class NetworkConfig private constructor() {
         private var instance: Retrofit? = null
 
         private val client = OkHttpClient.Builder()
-//            .addInterceptor(ApiKeyInterceptor())
+            .addInterceptor(NetworkInterceptor())
             .build()
 
         private fun createRetrofit(): Retrofit {

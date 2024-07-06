@@ -9,4 +9,8 @@ object ApiService {
         NetworkConfig.getInstance().create(AuthApiService::class.java)
     }
 
+    val chatApiService:ChatApiService by lazy {
+        NetworkConfig.getInstance().create(ChatApiService::class.java)
+    }
+
 }

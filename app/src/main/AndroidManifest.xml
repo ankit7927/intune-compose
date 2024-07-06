@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Intune"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustResize">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
