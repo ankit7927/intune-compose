@@ -15,8 +15,8 @@ interface AppContainer {
 class DefaultAppContainer(private val context: Context) : AppContainer {
 
     override val authRepository: AuthRepository
-        get() = AuthRepositoryImpl(ApiService.authApiService)
+        get() = AuthRepositoryImpl(ApiService(context).authApiService)
 
     override val chatRepository: ChatRepository
-        get() = ChatRepositoryImpl(ApiService.chatApiService)
+        get() = ChatRepositoryImpl(ApiService(context).chatApiService)
 }

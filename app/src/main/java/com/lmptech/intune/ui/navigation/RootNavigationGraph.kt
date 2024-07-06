@@ -1,7 +1,9 @@
 package com.lmptech.intune.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,15 +14,15 @@ import com.lmptech.intune.ui.landing.AuthDestination
 import com.lmptech.intune.ui.landing.AuthScreen
 import com.lmptech.intune.ui.landing.LandingDestination
 import com.lmptech.intune.ui.landing.LandingScreen
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun RootNavigationGraph(
-    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
     NavHost(
         navController = navController,
-        startDestination = AuthChecker.calculateStartDestination()
+        startDestination = AuthChecker.calculateStartDestination(LocalContext.current)
     ) {
 
         composable(route = LandingDestination.route) {

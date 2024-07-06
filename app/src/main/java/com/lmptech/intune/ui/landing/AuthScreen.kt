@@ -1,7 +1,6 @@
 package com.lmptech.intune.ui.landing
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,19 +20,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lmptech.intune.domain.pref.PreferenceManager
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.navigation.NavDestination
+import kotlinx.coroutines.launch
 
 object AuthDestination : NavDestination {
     override val route: String
@@ -49,12 +48,17 @@ fun AuthScreen(
     authViewModel: AuthViewModel = viewModel(factory = AppViewModelProvider.factory),
     onLoggedIn: () -> Unit = {}
 ) {
-
+    val coroutine = rememberCoroutineScope()
     val uiState by authViewModel.uiState.collectAsState()
+    val current = LocalContext.current
 
-    LaunchedEffect(key1 = uiState.loggedIn) {
-        if (uiState.loggedIn){
-           onLoggedIn.invoke()
+    LaunchedEffect(key1 = uiState.token) {
+        if (uiState.token != null) {
+            authViewModel.savingToken()
+            coroutine.launch {
+                PreferenceManager.saveToken(current, uiState.token!!)
+                onLoggedIn.invoke()
+            }
         }
     }
 
@@ -101,20 +105,21 @@ fun AuthScreen(
 
 
         Spacer(modifier = Modifier.height(16.dp))
-        if (uiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.size(24.dp))
-        } else {
-            Button(
-                modifier = Modifier.fillMaxWidth(),
-                onClick = { authViewModel.onContinueClick() }) {
+        Button(
+            enabled = ! (uiState.isLoading),
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { authViewModel.onContinueClick() }) {
+            if (uiState.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.size(24.dp))
+            } else {
                 Text(text = "Continue")
             }
         }
 
 
-
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(
+            enabled = ! (uiState.isLoading),
             modifier = Modifier.fillMaxWidth(),
             onClick = { authViewModel.toggleAuthScreen() }) {
             Text(text = if (uiState.loginScreen) "Register" else "Login")

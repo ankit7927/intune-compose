@@ -13,10 +13,10 @@ data class AuthUiState (
     val username:String = "",
     val email:String = "",
     val password:String = "",
-    val loggedIn:Boolean = false,
     val isLoading:Boolean = false,
     val error:String = "",
     var loginScreen: Boolean = true,
+    var token:String? = null
 )
 
 class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
@@ -34,6 +34,12 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
                     username = ""
                 )
             )
+        }
+    }
+
+    fun savingToken() {
+        viewModelScope.launch {
+            uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true))
         }
     }
 
@@ -63,13 +69,11 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
 
     fun onContinueClick() {
         viewModelScope.launch {
-            uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true))
+            uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true, error = ""))
             try {
                 val response = authRepository.login(LoginRequest(uiState.value.email, uiState.value.password))
                 if (response.isSuccessful) {
-                    // save token hr
-
-                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, loggedIn = true))
+                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, token = response.body()!!.token))
                 } else {
                     println(response.toString())
                     uiStateFlow.emit(
