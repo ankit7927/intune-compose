@@ -5,6 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.lmptech.intune.ui.home.MainScreenDestination
 import com.lmptech.intune.ui.home.MainView
@@ -13,6 +14,7 @@ import com.lmptech.intune.ui.landing.AuthScreen
 import com.lmptech.intune.ui.landing.LandingDestination
 import com.lmptech.intune.ui.landing.LandingScreen
 import com.lmptech.intune.ui.usermenu.UserMenuDestination
+import com.lmptech.intune.ui.usermenu.UserMenuScreen
 
 @Composable
 fun RootNavigationGraph(
@@ -39,12 +41,15 @@ fun RootNavigationGraph(
 
         composable(route = MainScreenDestination.route) {
             MainView(onProfileClick = {
-                navController.navigate(UserMenuDestination.route)
+                navController.navigate("user")
             })
         }
 
-        composable(route = UserMenuDestination.route){
-            UserNavigationGraph(navController = navController)
+
+        navigation(route = "user", startDestination = UserMenuDestination.route) {
+            composable(route = UserMenuDestination.route) {
+                UserMenuScreen()
+            }
         }
 
     }

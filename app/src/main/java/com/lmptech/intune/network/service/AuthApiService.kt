@@ -1,7 +1,7 @@
 package com.lmptech.intune.network.service
 
 import com.lmptech.intune.data.model.LoginRequest
-import com.lmptech.intune.data.model.LoginResponseModel
+import com.lmptech.intune.data.model.response.LoginResponseModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

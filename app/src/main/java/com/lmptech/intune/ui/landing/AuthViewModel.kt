@@ -3,6 +3,7 @@ package com.lmptech.intune.ui.landing
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lmptech.intune.data.model.LoginRequest
+import com.lmptech.intune.data.model.response.LoginResponseModel
 import com.lmptech.intune.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,7 @@ data class AuthUiState (
     val isLoading:Boolean = false,
     val error:String = "",
     var loginScreen: Boolean = true,
-    var token:String? = null
+    var token:LoginResponseModel? = null
 )
 
 class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
@@ -73,7 +74,7 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
             try {
                 val response = authRepository.login(LoginRequest(uiState.value.email, uiState.value.password))
                 if (response.isSuccessful) {
-                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, token = response.body()!!.token))
+                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, token = response.body()))
                 } else {
                     println(response.toString())
                     uiStateFlow.emit(

@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lmptech.intune.domain.pref.PreferenceManager
+import com.lmptech.intune.data.pref.PreferenceManager
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.navigation.NavDestination
 import kotlinx.coroutines.launch
@@ -57,6 +57,7 @@ fun AuthScreen(
             authViewModel.savingToken()
             coroutine.launch {
                 PreferenceManager.saveToken(current, uiState.token!!)
+            }.invokeOnCompletion {
                 onLoggedIn.invoke()
             }
         }
