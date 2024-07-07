@@ -5,7 +5,7 @@ import com.lmptech.intune.domain.pref.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class NetworkInterceptor(context: Context) : Interceptor {
+class AuthInterceptor(context: Context) : Interceptor {
 
     private val token = PreferenceManager.getToken(context)
 

@@ -15,7 +15,7 @@ class NetworkConfig private constructor() {
         private fun createRetrofit(context: Context): Retrofit {
 
             val client = OkHttpClient.Builder()
-                .addInterceptor(NetworkInterceptor(context))
+                .addInterceptor(AuthInterceptor(context))
                 .build()
 
             return Retrofit.Builder()
