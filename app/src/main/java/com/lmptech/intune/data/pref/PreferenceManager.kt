@@ -6,47 +6,66 @@ import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.lmptech.intune.data.model.response.LoginResponseModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-object PreferenceManager {
-    private const val PREFERENCES_NAME = "app_preferences"
-    private const val ACCESS_TOKEN_KEY = "access_token"
-    private const val REFRESH_TOKEN_KEY = "refresh_token"
+class DataStoreManager private constructor(context: Context) {
+    private val dataStore = context.dataStore
 
-    private fun getSharedPreferences(context: Context): SharedPreferences {
-        return context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+    companion object {
+        @Volatile
+        private var INSTANCE: DataStoreManager? = null
+
+        fun getInstance(context: Context): DataStoreManager {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: DataStoreManager(context).also { INSTANCE = it }
+            }
+        }
+
+        private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
+        private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
     }
 
-    fun saveToken(context: Context, responseModel: LoginResponseModel) {
-        getSharedPreferences(context).edit {
-            putString(ACCESS_TOKEN_KEY, responseModel.accessToken)
-            putString(REFRESH_TOKEN_KEY, responseModel.refreshToken)
+    fun getAccessToken():Flow<String> {
+        return dataStore.data.catch {
+            emit(emptyPreferences())
+        }.map { it[ACCESS_TOKEN_KEY]?: "" }
+    }
+
+    fun getRefreshToken():Flow<String> {
+        return dataStore.data.catch {
+            emit(emptyPreferences())
+        }.map { it[REFRESH_TOKEN_KEY]?: "" }
+    }
+
+    fun isUserLoggedIn():Flow<Boolean> {
+        return dataStore.data.catch {
+            emit(emptyPreferences())
+        }.map { it[ACCESS_TOKEN_KEY] != null }
+    }
+
+
+    suspend fun saveToken(loginResponseModel: LoginResponseModel) {
+        dataStore.edit { preferences ->
+            preferences[ACCESS_TOKEN_KEY] = loginResponseModel.accessToken
+            preferences[REFRESH_TOKEN_KEY] = loginResponseModel.refreshToken
         }
     }
 
-    fun getAccessToken(context: Context): String? {
-        val string = getSharedPreferences(context).getString(ACCESS_TOKEN_KEY, null)
-        println(string)
-        return string
-    }
-
-    fun getRefreshToken(context: Context): String? {
-        return getSharedPreferences(context).getString(REFRESH_TOKEN_KEY, "")
-    }
-
-    fun isTokenExists(context: Context): Boolean {
-        return getSharedPreferences(context).contains(ACCESS_TOKEN_KEY) &&
-                getSharedPreferences(context).contains(REFRESH_TOKEN_KEY)
-    }
-
-    fun clearToken(context: Context) {
-        getSharedPreferences(context).edit {
-            remove(ACCESS_TOKEN_KEY)
-            remove(REFRESH_TOKEN_KEY)
+    suspend fun clearToken() {
+        dataStore.edit { preferences ->
+            preferences.remove(ACCESS_TOKEN_KEY)
+            preferences.remove(REFRESH_TOKEN_KEY)
         }
     }
+
 }
+

@@ -22,11 +22,24 @@ fun RootNavigationGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = AuthChecker.calculateStartDestination(LocalContext.current)
+        startDestination = LandingDestination.route
     ) {
 
         composable(route = LandingDestination.route) {
-            LandingScreen(onGetStartedClick = {navController.navigate(AuthDestination.route)})
+            LandingScreen(navigateToAuth = {
+                navController.navigate(AuthDestination.route) {
+                    popUpTo(LandingDestination.route) {
+                        inclusive = true
+                    }
+                }
+            },
+                navigateToHome = {
+                    navController.navigate(MainScreenDestination.route) {
+                        popUpTo(LandingDestination.route) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
 
         composable(route = AuthDestination.route) {

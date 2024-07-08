@@ -73,6 +73,7 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
             uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true, error = ""))
             try {
                 val response = authRepository.login(LoginRequest(uiState.value.email, uiState.value.password))
+                println(response.body())
                 if (response.isSuccessful) {
                     uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, token = response.body()))
                 } else {

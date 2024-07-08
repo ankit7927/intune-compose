@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lmptech.intune.data.pref.PreferenceManager
+import com.lmptech.intune.data.pref.DataStoreManager
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.navigation.NavDestination
 import kotlinx.coroutines.launch
@@ -50,13 +50,14 @@ fun AuthScreen(
 ) {
     val coroutine = rememberCoroutineScope()
     val uiState by authViewModel.uiState.collectAsState()
-    val current = LocalContext.current
+    val dataStoreManager = DataStoreManager.getInstance(LocalContext.current)
 
     LaunchedEffect(key1 = uiState.token) {
         if (uiState.token != null) {
             authViewModel.savingToken()
             coroutine.launch {
-                PreferenceManager.saveToken(current, uiState.token!!)
+                dataStoreManager.clearToken()
+                dataStoreManager.saveToken(uiState.token!!)
             }.invokeOnCompletion {
                 onLoggedIn.invoke()
             }
