@@ -14,4 +14,8 @@ class ApiService(private val context: Context) {
         NetworkConfig.getInstance(context).create(ChatApiService::class.java)
     }
 
+    val userApiService: UserApiService by lazy {
+        NetworkConfig.getInstance(context).create(UserApiService::class.java)
+    }
+
 }

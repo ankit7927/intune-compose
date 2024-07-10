@@ -19,9 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.lmptech.intune.ui.navigation.NavDestination
+
+object RequestsDestination: NavDestination {
+    override val route: String
+        get() = "request_screen"
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun RequestsScreen() {
     Scaffold (

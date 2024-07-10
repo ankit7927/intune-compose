@@ -1,5 +1,6 @@
 package com.lmptech.intune.ui.usermenu
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -26,11 +27,24 @@ object UserMenuDestination: NavDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserMenuScreen(modifier: Modifier = Modifier) {
+fun UserMenuScreen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    onProfileClick: () -> Unit,
+    onAccountClick: () -> Unit,
+    onRequestsClick: () -> Unit,
+    onNewRequestClick: () -> Unit,
+    onLogoutClick: () -> Unit
+) {
+
+    BackHandler {
+        onBackClick()
+    }
+
     Scaffold(topBar = {
         TopAppBar(title = { Text(text = "Menu") })
     }, floatingActionButton = {
-        FloatingActionButton(onClick = { /*TODO*/ }) {
+        FloatingActionButton(onClick = { onNewRequestClick.invoke() }) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "")
         }
     }) {
@@ -41,7 +55,7 @@ fun UserMenuScreen(modifier: Modifier = Modifier) {
                 )
             }, headlineContent = { Text(text = "Profile") }, supportingContent = {
                 Text(text = "manage your profile related settings")
-            }, modifier = Modifier.clickable { })
+            }, modifier = Modifier.clickable { onProfileClick.invoke() })
 
             ListItem(leadingContent = {
                 Icon(
@@ -49,7 +63,7 @@ fun UserMenuScreen(modifier: Modifier = Modifier) {
                 )
             }, headlineContent = { Text(text = "Account") }, supportingContent = {
                 Text(text = "manage your account related settings")
-            }, modifier = Modifier.clickable { })
+            }, modifier = Modifier.clickable { onAccountClick.invoke() })
 
             ListItem(leadingContent = {
                 Icon(
@@ -57,7 +71,7 @@ fun UserMenuScreen(modifier: Modifier = Modifier) {
                 )
             }, headlineContent = { Text(text = "Requests") }, supportingContent = {
                 Text(text = "manage chat requests")
-            }, modifier = Modifier.clickable { })
+            }, modifier = Modifier.clickable { onRequestsClick.invoke() })
         }
     }
 }

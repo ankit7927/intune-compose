@@ -25,17 +25,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.lmptech.intune.data.model.UserModel
 import com.lmptech.intune.data.model.response.ChatResponseModel
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.components.ChatListItem
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer(
     modifier: Modifier = Modifier,
     drawerViewModel: DrawerViewModel = viewModel(factory = AppViewModelProvider.factory),
-    onChatClick:(String) -> Unit = {},
-    onProfileClick:() ->Unit = {}
+    onChatClick: (String) -> Unit = {},
+    onProfileClick: () -> Unit = {}
 ) {
     val drawerState by drawerViewModel.drawerUiState.collectAsState()
 
@@ -44,48 +46,47 @@ fun Drawer(
             .fillMaxHeight()
             .fillMaxWidth(0.8f)
     ) {
-        if (drawerState.loading) {
-            CircularProgressIndicator()
-        } else if (drawerState.error != "") {
-            Text(text = drawerState.error)
-        } else {
-            DrawerBody(
-                chats = drawerState.chats,
-                onChatClick = onChatClick,
-                onProfileClick = onProfileClick
-            )
-        }
-    }
-}
+        Column(
+            modifier = modifier
+                .statusBarsPadding()
+                .navigationBarsPadding()
+                .imePadding()
+        ) {
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DrawerBody(
-    modifier: Modifier = Modifier,
-    chats: List<ChatResponseModel>,
-    onChatClick: (String) -> Unit = {},
-    onProfileClick:() ->Unit = {}
-) {
+            SearchBar(
+                modifier = Modifier.padding(horizontal = 12.dp),
+                query = if (drawerState.error != "") drawerState.error else "",
+                onQueryChange = {},
+                onSearch = {},
+                active = false,
+                onActiveChange = {}) {}
 
-    Column(modifier = modifier
-        .statusBarsPadding()
-        .navigationBarsPadding()
-        .imePadding()){
-        SearchBar(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            query = "", onQueryChange = {}, onSearch = {}, active = false, onActiveChange = {}) {}
-        LazyColumn(modifier = Modifier.weight(1f, fill = true)) {
-            items(items = chats, key = {it.id}) {
-                ChatListItem(it, onChatClick = onChatClick)
+            if (drawerState.loading) {
+                CircularProgressIndicator()
+            } else {
+                LazyColumn(modifier = Modifier.weight(1f, fill = true)) {
+                    items(items = drawerState.chats, key = { it.id }) {
+                        ChatListItem(it, onChatClick = onChatClick)
+                    }
+                }
+            }
+
+            if (drawerState.loadingUser) {
+                CircularProgressIndicator()
+            } else if (drawerState.user != null) {
+                ListItem(
+                    modifier = Modifier.clickable { onProfileClick.invoke() },
+                    headlineContent = { Text(text = drawerState.user!!.name) },
+                    supportingContent = { Text(text = drawerState.user!!.username) },
+                    trailingContent = {
+                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = "")
+                    })
+            } else {
+                Text(text = "failed to get user")
             }
         }
 
-        ListItem(
-            modifier = Modifier.clickable { onProfileClick.invoke() },
-            headlineContent = { Text(text = "User Name") },
-            supportingContent = { Text(text = "status") },
-            trailingContent = {
-                Icon(imageVector = Icons.Default.MoreVert, contentDescription = "")
-            })
+
     }
 }
+

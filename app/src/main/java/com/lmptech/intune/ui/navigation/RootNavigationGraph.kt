@@ -13,6 +13,8 @@ import com.lmptech.intune.ui.landing.AuthDestination
 import com.lmptech.intune.ui.landing.AuthScreen
 import com.lmptech.intune.ui.landing.LandingDestination
 import com.lmptech.intune.ui.landing.LandingScreen
+import com.lmptech.intune.ui.profile.ProfileDestination
+import com.lmptech.intune.ui.profile.ProfileScreen
 import com.lmptech.intune.ui.usermenu.UserMenuDestination
 import com.lmptech.intune.ui.usermenu.UserMenuScreen
 
@@ -61,7 +63,24 @@ fun RootNavigationGraph(
 
         navigation(route = "user", startDestination = UserMenuDestination.route) {
             composable(route = UserMenuDestination.route) {
-                UserMenuScreen()
+                UserMenuScreen(
+                    onBackClick = {
+                        navController.navigate(MainScreenDestination.route) {
+                            popUpTo(
+                                MainScreenDestination.route
+                            ) { inclusive = false }
+                        }
+                    },
+                    onProfileClick = {navController.navigate(ProfileDestination.route)},
+                    onAccountClick = {},
+                    onRequestsClick = {},
+                    onLogoutClick = {},
+                    onNewRequestClick = {}
+                )
+            }
+
+            composable(route = ProfileDestination.route) {
+                ProfileScreen()
             }
         }
 

@@ -16,7 +16,11 @@ object AppViewModelProvider {
         }
 
         initializer {
-            DrawerViewModel(application().appContainer.chatRepository)
+            DrawerViewModel(
+                application().appContainer.chatRepository,
+                application().appContainer.userRepository,
+                application().appContainer.userCacheRepo
+            )
         }
     }
 }

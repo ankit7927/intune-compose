@@ -16,6 +16,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lmptech.intune.ui.navigation.NavDestination
+
+object NewRequestDestination: NavDestination {
+    override val route: String
+        get() = "new_request_screen"
+}
 
 @Composable
 fun NewRequestScreen(modifier: Modifier = Modifier) {

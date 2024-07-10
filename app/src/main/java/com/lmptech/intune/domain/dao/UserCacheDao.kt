@@ -13,6 +13,9 @@ interface UserCacheDao {
     @Query("SELECT * FROM users ORDER BY ROWID ASC LIMIT 1")
     fun getUser() : Flow<UserModel>
 
+    @Query("SELECT EXISTS(SELECT * FROM users)")
+    fun isUserCached() : Flow<Boolean>
+
     @Insert
     suspend fun insertUser(user: UserModel)
 

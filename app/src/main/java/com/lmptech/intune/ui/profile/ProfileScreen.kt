@@ -18,11 +18,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.lmptech.intune.ui.navigation.NavDestination
 
+
+object ProfileDestination: NavDestination {
+    override val route: String
+        get() = "profile_screen"
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ProfileScreen() {
+fun ProfileScreen() {
 
     var changed by remember { mutableStateOf(false) }
 
