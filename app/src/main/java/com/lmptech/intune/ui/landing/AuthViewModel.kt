@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lmptech.intune.data.model.LoginRequest
 import com.lmptech.intune.data.model.response.LoginResponseModel
-import com.lmptech.intune.data.repository.AuthRepository
+import com.lmptech.intune.network.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -1,5 +1,8 @@
 package com.lmptech.intune.data.model
 
+import androidx.room.Entity
+
+@Entity(tableName = "users")
 data class UserModel(
     val id: String,
     val name: String,
@@ -7,5 +10,4 @@ data class UserModel(
     val email: String,
     val password: String,
     val verified: Boolean,
-
 )

@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.UiMode
 import androidx.compose.ui.unit.dp
-import com.lmptech.intune.data.pref.DataStoreManager
+import com.lmptech.intune.domain.pref.DataStoreManager
 import com.lmptech.intune.ui.navigation.NavDestination
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn

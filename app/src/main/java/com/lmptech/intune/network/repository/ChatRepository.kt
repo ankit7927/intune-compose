@@ -1,4 +1,4 @@
-package com.lmptech.intune.data.repository
+package com.lmptech.intune.network.repository
 
 import com.lmptech.intune.data.model.response.ChatResponseModel
 import com.lmptech.intune.network.service.ChatApiService

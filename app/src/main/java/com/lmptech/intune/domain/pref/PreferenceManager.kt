@@ -1,4 +1,4 @@
-package com.lmptech.intune.data.pref
+package com.lmptech.intune.domain.pref
 
 import android.content.Context
 import android.content.SharedPreferences

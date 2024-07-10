@@ -3,7 +3,7 @@ package com.lmptech.intune.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lmptech.intune.data.model.response.ChatResponseModel
-import com.lmptech.intune.data.repository.ChatRepository
+import com.lmptech.intune.network.repository.ChatRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +21,6 @@ class DrawerViewModel (private val chatRepository: ChatRepository) : ViewModel()
         get() = drawerState
 
     init {
-        println("launching")
         getChats()
     }
 

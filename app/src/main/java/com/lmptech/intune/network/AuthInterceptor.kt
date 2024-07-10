@@ -3,7 +3,7 @@ package com.lmptech.intune.network
 import android.content.Context
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.lmptech.intune.data.pref.DataStoreManager
+import com.lmptech.intune.domain.pref.DataStoreManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
