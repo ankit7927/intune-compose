@@ -5,12 +5,12 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.lmptech.intune.data.model.response.ChatResponseModel
+import com.lmptech.intune.data.model.ChatModel
 
 @Composable
-fun ChatListItem(chatResponseModel: ChatResponseModel, onChatClick: (String)->Unit = {}) {
+fun ChatListItem(chatModel: ChatModel, onChatClick: (String)->Unit = {}) {
     ListItem(
-        modifier = Modifier.clickable { onChatClick.invoke(chatResponseModel.id) },
-        headlineContent = { Text(text = chatResponseModel.name) },
-        leadingContent = {}, supportingContent = { Text(text = chatResponseModel.roomId)})
+        modifier = Modifier.clickable { onChatClick.invoke(chatModel.id) },
+        headlineContent = { Text(text = chatModel.name) },
+        leadingContent = {}, supportingContent = { Text(text = chatModel.roomId)})
 }

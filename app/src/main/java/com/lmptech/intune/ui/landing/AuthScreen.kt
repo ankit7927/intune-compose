@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lmptech.intune.domain.pref.DataStoreManager
+import com.lmptech.intune.data.local.pref.DataStoreManager
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.navigation.NavDestination
 import kotlinx.coroutines.launch
@@ -55,21 +55,20 @@ fun AuthScreen(
     LaunchedEffect(key1 = uiState.token) {
         if (uiState.token != null) {
             authViewModel.savingToken()
-            coroutine.launch {
-                dataStoreManager.clearToken()
-                dataStoreManager.saveToken(uiState.token!!)
-            }.invokeOnCompletion {
-                onLoggedIn.invoke()
-            }
+            dataStoreManager.clearToken()
+            dataStoreManager.saveToken(uiState.token!!)
+            onLoggedIn.invoke()
         }
     }
 
-    Column (modifier = modifier
-        .fillMaxSize()
-        .padding(horizontal = 16.dp)
-        .statusBarsPadding()
-        .navigationBarsPadding()
-        .imePadding()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .imePadding()
+    ) {
 
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = if (uiState.loginScreen) "Welcome Back" else "Hello there!", style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Medium))

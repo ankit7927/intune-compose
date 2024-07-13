@@ -1,18 +1,15 @@
-package com.lmptech.intune.domain.pref
+package com.lmptech.intune.data.local.pref
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.lmptech.intune.data.model.response.LoginResponseModel
+import com.lmptech.intune.data.model.LoginResponseModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -34,22 +31,16 @@ class DataStoreManager private constructor(context: Context) {
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
     }
 
-    fun getAccessToken():Flow<String> {
-        return dataStore.data.catch {
-            emit(emptyPreferences())
-        }.map { it[ACCESS_TOKEN_KEY]?: "" }
+    val accessToken: Flow<String> = dataStore.data.map {
+        it[ACCESS_TOKEN_KEY] ?: ""
     }
 
-    fun getRefreshToken():Flow<String> {
-        return dataStore.data.catch {
-            emit(emptyPreferences())
-        }.map { it[REFRESH_TOKEN_KEY]?: "" }
+    val refreshToken: Flow<String> = dataStore.data.map {
+        it[REFRESH_TOKEN_KEY] ?: ""
     }
 
-    fun isUserLoggedIn():Flow<Boolean> {
-        return dataStore.data.catch {
-            emit(emptyPreferences())
-        }.map { it[ACCESS_TOKEN_KEY] != null }
+    val isLoggedIn: Flow<Boolean> = dataStore.data.map {
+        it[ACCESS_TOKEN_KEY] != null
     }
 
 

@@ -25,8 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lmptech.intune.data.model.UserModel
-import com.lmptech.intune.data.model.response.ChatResponseModel
 import com.lmptech.intune.ui.AppViewModelProvider
 import com.lmptech.intune.ui.components.ChatListItem
 

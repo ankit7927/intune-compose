@@ -1,11 +1,12 @@
-package com.lmptech.intune.network
+package com.lmptech.intune.data.remote
 
 import android.content.Context
+import com.lmptech.intune.util.AuthInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NetworkConfig private constructor() {
+class RemoteConfig private constructor() {
     companion object {
         private const val BASE_URL = "http://192.168.212.24:8080"
 

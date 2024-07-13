@@ -1,4 +1,4 @@
-package com.lmptech.intune.network.service
+package com.lmptech.intune.data.remote.api
 
 import com.lmptech.intune.data.model.UserModel
 import retrofit2.Response

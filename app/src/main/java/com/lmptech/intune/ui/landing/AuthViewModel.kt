@@ -2,9 +2,9 @@ package com.lmptech.intune.ui.landing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lmptech.intune.data.model.LoginRequest
-import com.lmptech.intune.data.model.response.LoginResponseModel
-import com.lmptech.intune.network.repository.AuthRepository
+import com.lmptech.intune.data.model.LoginRequestModel
+import com.lmptech.intune.data.model.LoginResponseModel
+import com.lmptech.intune.data.remote.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ data class AuthUiState (
     val isLoading:Boolean = false,
     val error:String = "",
     var loginScreen: Boolean = true,
-    var token:LoginResponseModel? = null
+    var token: LoginResponseModel? = null
 )
 
 class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
@@ -70,14 +70,13 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
 
     fun onContinueClick() {
         viewModelScope.launch {
-            uiStateFlow.emit(uiStateFlow.value.copy(isLoading = true, error = ""))
+            uiStateFlow.emit(uiState.value.copy(isLoading = true, error = ""))
             try {
-                val response = authRepository.login(LoginRequest(uiState.value.email, uiState.value.password))
-                println(response.body())
+                val response = authRepository.login(LoginRequestModel(uiState.value.email, uiState.value.password))
+
                 if (response.isSuccessful) {
-                    uiStateFlow.emit(uiStateFlow.value.copy(isLoading = false, token = response.body()))
+                    uiStateFlow.emit(uiState.value.copy(isLoading = false, token = response.body()))
                 } else {
-                    println(response.toString())
                     uiStateFlow.emit(
                         uiStateFlow.value.copy(
                             isLoading = false,
@@ -86,7 +85,6 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
                     )
                 }
             } catch (e: Exception) {
-                println(e.toString())
                 uiStateFlow.emit(
                     uiStateFlow.value.copy(
                         isLoading = false,

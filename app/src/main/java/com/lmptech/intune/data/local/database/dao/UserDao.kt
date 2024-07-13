@@ -1,4 +1,4 @@
-package com.lmptech.intune.domain.dao
+package com.lmptech.intune.data.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -9,9 +9,9 @@ import com.lmptech.intune.data.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface UserCacheDao {
+interface UserDao {
     @Query("SELECT * FROM users ORDER BY ROWID ASC LIMIT 1")
-    fun getUser() : Flow<UserModel>
+    fun getUser() : UserModel
 
     @Query("SELECT EXISTS(SELECT * FROM users)")
     fun isUserCached() : Flow<Boolean>
