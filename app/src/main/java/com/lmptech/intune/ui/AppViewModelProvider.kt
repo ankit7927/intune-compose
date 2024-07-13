@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.lmptech.intune.IntuneApplication
 import com.lmptech.intune.ui.home.DrawerViewModel
 import com.lmptech.intune.ui.landing.AuthViewModel
+import com.lmptech.intune.ui.profile.ProfileViewModel
 
 object AppViewModelProvider {
     val factory: ViewModelProvider.Factory = viewModelFactory {
@@ -21,6 +22,13 @@ object AppViewModelProvider {
                 application().appContainer.chatRepository,
                 application().appContainer.remoteUserRepository,
                 application().appContainer.userRepository
+            )
+        }
+
+        initializer {
+            ProfileViewModel(
+                application().appContainer.userRepository,
+                application().appContainer.remoteUserRepository
             )
         }
     }

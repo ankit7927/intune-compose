@@ -73,29 +73,21 @@ fun HomeScreen(
                 }
             }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 4.dp)
-            ) {
-
-                OutlinedTextField(
-                    modifier = Modifier
-                        .weight(1f),
-                    maxLines = 3,
-                    value = text.value, onValueChange = { text.value = it },
-                    shape = RoundedCornerShape(12.dp)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-                FilledIconButton(onClick = { /*TODO*/ },
-                    modifier = Modifier.size(52.dp),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Icon(imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "")
+                    .fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp),
+                maxLines = 3,
+                value = text.value, onValueChange = { text.value = it },
+                shape = RoundedCornerShape(12.dp),
+                trailingIcon = {
+                    FilledIconButton(onClick = { /*TODO*/ },
+                        modifier = Modifier.size(48.dp).padding(end = 6.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "")
+                    }
                 }
-            }
+            )
         }
     }
 

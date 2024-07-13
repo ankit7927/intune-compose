@@ -37,9 +37,7 @@ class DrawerViewModel(
 
         viewModelScope.launch (Dispatchers.IO) {
             getChats()
-        }
 
-        viewModelScope.launch (Dispatchers.IO) {
             drawerState.emit(drawerUiState.value.copy(loadingUser = true))
 
             val user = userRepository.getUserData()
