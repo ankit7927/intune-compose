@@ -26,9 +26,11 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -42,7 +44,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     activeChatId: String,
@@ -63,14 +64,8 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            ListItem(
-                headlineContent = { Text(text = activeChatId) },
-                supportingContent = { Text(text = "some test") },
-                leadingContent = {
-                    IconButton(onClick = { openDrawer.invoke() }) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "")
-                    }
-                })
+            ListItem(headlineContent = { Text(text = activeChatId) },
+                supportingContent = { Text(text = "support")})
 
             LazyColumn (modifier = Modifier.weight(1f, fill = true)) {
                 items(count = 30) {
@@ -79,33 +74,25 @@ fun HomeScreen(
             }
 
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 4.dp)
             ) {
 
-                BasicTextField(
+                OutlinedTextField(
                     modifier = Modifier
-                        .height(48.dp)
                         .weight(1f),
                     maxLines = 3,
                     value = text.value, onValueChange = { text.value = it },
-                    textStyle = TextStyle(fontSize = 18.sp),
-                    decorationBox = {
-                        Row(
-                            Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.surfaceVariant,
-                                    RoundedCornerShape(45.dp)
-                                ).padding(horizontal = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            it()
-                        }
-                    }
+                    shape = RoundedCornerShape(12.dp)
                 )
+
                 Spacer(modifier = Modifier.width(8.dp))
-                FilledIconButton(onClick = { /*TODO*/ }, modifier = Modifier.size(48.dp)) {
+                FilledIconButton(onClick = { /*TODO*/ },
+                    modifier = Modifier.size(52.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
                     Icon(imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "")
                 }
             }

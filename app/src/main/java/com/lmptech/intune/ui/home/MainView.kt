@@ -1,8 +1,10 @@
 package com.lmptech.intune.ui.home
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -59,7 +61,8 @@ fun MainView(
 
 
     ModalNavigationDrawer(
-        modifier = Modifier.imePadding(),
+        modifier = Modifier.background(color = MaterialTheme.colorScheme.surface)
+            .imePadding(),
         drawerState = dState,
         gesturesEnabled = true,
         drawerContent = {
