@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lmptech.intune.data.model.LoginRequestModel
 import com.lmptech.intune.data.model.LoginResponseModel
+import com.lmptech.intune.data.model.RegisterRequestModel
 import com.lmptech.intune.data.remote.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +33,8 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
                 uiStateFlow.value.copy(
                     loginScreen = !uiStateFlow.value.loginScreen,
                     name = "",
-                    username = ""
+                    username = "",
+                    error = ""
                 )
             )
         }
@@ -72,18 +74,43 @@ class AuthViewModel (private val authRepository: AuthRepository) : ViewModel() {
         viewModelScope.launch {
             uiStateFlow.emit(uiState.value.copy(isLoading = true, error = ""))
             try {
-                val response = authRepository.login(LoginRequestModel(uiState.value.email, uiState.value.password))
 
-                if (response.isSuccessful) {
-                    uiStateFlow.emit(uiState.value.copy(isLoading = false, token = response.body()))
+                if (uiState.value.loginScreen) {
+                    val response = authRepository.login(LoginRequestModel(uiState.value.email, uiState.value.password))
+                    if (response.isSuccessful) {
+                        uiStateFlow.emit(uiState.value.copy(isLoading = false, token = response.body()))
+                    } else {
+                        uiStateFlow.emit(
+                            uiStateFlow.value.copy(
+                                isLoading = false,
+                                error = "Bad credentials"
+                            )
+                        )
+                    }
+
                 } else {
-                    uiStateFlow.emit(
-                        uiStateFlow.value.copy(
-                            isLoading = false,
-                            error = response.message()
+                    val response = authRepository.register(
+                        RegisterRequestModel(
+                            email = uiState.value.email,
+                            password = uiState.value.password,
+                            username = uiState.value.username,
+                            name = uiState.value.name
                         )
                     )
+
+                    if (response.isSuccessful) {
+                        uiStateFlow.emit(uiState.value.copy(isLoading = false, loginScreen = true, ))
+                    } else {
+                        uiStateFlow.emit(
+                            uiStateFlow.value.copy(
+                                isLoading = false,
+                                error = "something went wrong"
+                            )
+                        )
+                    }
                 }
+
+
             } catch (e: Exception) {
                 uiStateFlow.emit(
                     uiStateFlow.value.copy(

@@ -9,6 +9,7 @@ import com.lmptech.intune.IntuneApplication
 import com.lmptech.intune.ui.home.DrawerViewModel
 import com.lmptech.intune.ui.landing.AuthViewModel
 import com.lmptech.intune.ui.profile.ProfileViewModel
+import com.lmptech.intune.ui.usermenu.UserMenuViewModel
 
 object AppViewModelProvider {
     val factory: ViewModelProvider.Factory = viewModelFactory {
@@ -29,6 +30,13 @@ object AppViewModelProvider {
             ProfileViewModel(
                 application().appContainer.userRepository,
                 application().appContainer.remoteUserRepository
+            )
+        }
+
+        initializer {
+            UserMenuViewModel(
+                application().appContainer.userRepository,
+                application().appContainer.chatRepository
             )
         }
     }

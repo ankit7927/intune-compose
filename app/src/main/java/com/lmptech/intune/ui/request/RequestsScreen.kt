@@ -28,7 +28,7 @@ object RequestsDestination: NavDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RequestsScreen() {
+fun RequestsScreen() {
     Scaffold (
         topBar = {
             TopAppBar(title = { Text(text = "Requests") })

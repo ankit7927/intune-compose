@@ -2,6 +2,7 @@ package com.lmptech.intune.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,8 +16,11 @@ import com.lmptech.intune.ui.landing.LandingDestination
 import com.lmptech.intune.ui.landing.LandingScreen
 import com.lmptech.intune.ui.profile.ProfileDestination
 import com.lmptech.intune.ui.profile.ProfileScreen
+import com.lmptech.intune.ui.request.RequestsDestination
+import com.lmptech.intune.ui.request.RequestsScreen
 import com.lmptech.intune.ui.usermenu.UserMenuDestination
 import com.lmptech.intune.ui.usermenu.UserMenuScreen
+import kotlinx.coroutines.flow.map
 
 @Composable
 fun RootNavigationGraph(
@@ -73,14 +77,25 @@ fun RootNavigationGraph(
                     },
                     onProfileClick = {navController.navigate(ProfileDestination.route)},
                     onAccountClick = {},
-                    onRequestsClick = {},
-                    onLogoutClick = {},
+                    onRequestsClick = {
+                        navController.navigate(RequestsDestination.route)
+                    },
+                    onLogoutClick = {
+                        navController.navigate(LandingDestination.route) {
+                            popUpTo(0) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    },
                     onNewRequestClick = {}
                 )
             }
 
             composable(route = ProfileDestination.route) {
-                ProfileScreen()
+                ProfileScreen(onBackClick = {navController.popBackStack()})
+            }
+
+            composable(route = RequestsDestination.route) {
+                RequestsScreen()
             }
         }
 

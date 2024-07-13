@@ -9,10 +9,14 @@ interface ChatRepository {
     suspend fun getAllChats():List<ChatModel>
 
     suspend fun insertChats(chats:List<ChatModel>)
+
+    suspend fun deleteAllChats()
 }
 
 class ChatRepositoryImpl(private val chatDao: ChatDao) : ChatRepository {
     override suspend fun getAllChats(): List<ChatModel> = chatDao.getAllChats()
 
     override suspend fun insertChats(chats: List<ChatModel>) = chatDao.insertChats(chats)
+
+    override suspend fun deleteAllChats() = chatDao.deleteAllChats()
 }
