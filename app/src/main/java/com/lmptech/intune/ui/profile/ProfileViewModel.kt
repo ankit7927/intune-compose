@@ -42,7 +42,7 @@ class ProfileViewModel(
     fun onSave() {
         viewModelScope.launch (Dispatchers.IO) {
             profileViewState.emit(profile.value.copy(loading = true))
-            val updateUser = remoteUserRepository.updateUser(user = profile.value.userModel!!)
+            val updateUser = remoteUserRepository.updateUser(user = profile.value.userModel!!, section = "profile")
             if (updateUser.isSuccessful) {
                 profileViewState.emit(profile.value.copy(loading = false))
                 userRepository.updateUser(profile.value.userModel!!)

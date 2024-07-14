@@ -5,14 +5,16 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface UserApiService {
 
     @GET("/user/me")
     suspend fun getUserData(): Response<UserModel>
 
-    @PUT("/user/update")
+    @PUT("/user/update/{section}")
     suspend fun updateUser(
-        @Body user: UserModel
+        @Body user: UserModel,
+        @Path("section") section: String
     ): Response<UserModel>
 }
