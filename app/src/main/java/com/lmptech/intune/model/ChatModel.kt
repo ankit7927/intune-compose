@@ -1,4 +1,4 @@
-package com.lmptech.intune.data.model
+package com.lmptech.intune.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,7 +12,7 @@ data class ChatModel(
     val name: String,
 )
 
-data class ChatRequestModel(
+data class RawRequestModel(
     val id: String,
     val senderId: String,
     val receiverId: String,

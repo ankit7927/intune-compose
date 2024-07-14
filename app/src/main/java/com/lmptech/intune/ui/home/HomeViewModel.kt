@@ -2,7 +2,7 @@ package com.lmptech.intune.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lmptech.intune.data.model.ChatModel
+import com.lmptech.intune.model.ChatModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +33,7 @@ private data class HomeViewModelState(
     val loading: Boolean = false,
     val error: String = "",
     val activeChatId: String = "",
-    val chat:ChatModel? = null
+    val chat: ChatModel? = null
 ) {
     fun toHomeState() : HomeState = if (chat != null) {
         HomeState.HomeWithChat(loading, error, activeChatId, chat)

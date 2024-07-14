@@ -5,7 +5,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.lmptech.intune.data.model.ChatModel
+import com.lmptech.intune.model.ChatModel
 
 @Composable
 fun ChatListItem(chatModel: ChatModel, onChatClick: (String)->Unit = {}) {

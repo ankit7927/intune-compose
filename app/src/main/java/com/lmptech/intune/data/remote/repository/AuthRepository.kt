@@ -1,10 +1,10 @@
 package com.lmptech.intune.data.remote.repository
 
 import com.lmptech.intune.data.remote.api.AuthApiService
-import com.lmptech.intune.data.model.LoginRequestModel
-import com.lmptech.intune.data.model.LoginResponseModel
-import com.lmptech.intune.data.model.RegisterRequestModel
-import com.lmptech.intune.data.model.RegisterResponseModel
+import com.lmptech.intune.model.LoginRequestModel
+import com.lmptech.intune.model.LoginResponseModel
+import com.lmptech.intune.model.RegisterRequestModel
+import com.lmptech.intune.model.RegisterResponseModel
 import retrofit2.Response
 
 interface AuthRepository {

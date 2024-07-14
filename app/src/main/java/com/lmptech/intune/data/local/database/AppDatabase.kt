@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.lmptech.intune.data.local.database.dao.ChatDao
 import com.lmptech.intune.data.local.database.dao.UserDao
-import com.lmptech.intune.data.model.ChatModel
-import com.lmptech.intune.data.model.UserModel
+import com.lmptech.intune.model.ChatModel
+import com.lmptech.intune.model.UserModel
 
 
 @Database(entities = [UserModel::class, ChatModel::class], version = 1, exportSchema = false)

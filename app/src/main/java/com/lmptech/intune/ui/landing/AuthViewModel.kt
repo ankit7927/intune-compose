@@ -2,9 +2,9 @@ package com.lmptech.intune.ui.landing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lmptech.intune.data.model.LoginRequestModel
-import com.lmptech.intune.data.model.LoginResponseModel
-import com.lmptech.intune.data.model.RegisterRequestModel
+import com.lmptech.intune.model.LoginRequestModel
+import com.lmptech.intune.model.LoginResponseModel
+import com.lmptech.intune.model.RegisterRequestModel
 import com.lmptech.intune.data.remote.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

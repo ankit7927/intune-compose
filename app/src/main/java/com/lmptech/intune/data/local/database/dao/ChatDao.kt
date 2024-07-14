@@ -3,7 +3,7 @@ package com.lmptech.intune.data.local.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.lmptech.intune.data.model.ChatModel
+import com.lmptech.intune.model.ChatModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

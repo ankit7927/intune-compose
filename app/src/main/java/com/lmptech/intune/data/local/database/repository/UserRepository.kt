@@ -1,7 +1,7 @@
 package com.lmptech.intune.data.local.database.repository
 
 import com.lmptech.intune.data.local.database.dao.UserDao
-import com.lmptech.intune.data.model.UserModel
+import com.lmptech.intune.model.UserModel
 
 interface UserRepository {
     suspend fun getUserData(): UserModel?

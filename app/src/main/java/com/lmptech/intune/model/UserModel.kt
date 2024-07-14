@@ -1,4 +1,4 @@
-package com.lmptech.intune.data.model
+package com.lmptech.intune.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

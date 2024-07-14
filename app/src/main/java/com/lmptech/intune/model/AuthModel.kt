@@ -1,6 +1,6 @@
-package com.lmptech.intune.data.model
+package com.lmptech.intune.model
 
-data class LoginRequestModel(val username:String, val password:String)
+data class LoginRequestModel(val email:String, val password:String)
 
 data class LoginResponseModel(val accessToken: String, val refreshToken: String)
 

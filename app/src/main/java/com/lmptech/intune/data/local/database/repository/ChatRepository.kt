@@ -1,7 +1,7 @@
 package com.lmptech.intune.data.local.database.repository
 
 import com.lmptech.intune.data.local.database.dao.ChatDao
-import com.lmptech.intune.data.model.ChatModel
+import com.lmptech.intune.model.ChatModel
 import com.lmptech.intune.data.remote.api.ChatApiService
 import kotlinx.coroutines.flow.Flow
 

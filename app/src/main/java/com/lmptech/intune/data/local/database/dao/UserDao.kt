@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.lmptech.intune.data.model.UserModel
+import com.lmptech.intune.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

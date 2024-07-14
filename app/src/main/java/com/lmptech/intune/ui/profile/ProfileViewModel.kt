@@ -3,7 +3,7 @@ package com.lmptech.intune.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lmptech.intune.data.local.database.repository.UserRepository
-import com.lmptech.intune.data.model.UserModel
+import com.lmptech.intune.model.UserModel
 import com.lmptech.intune.data.remote.repository.RemoteUserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
